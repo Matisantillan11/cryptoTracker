@@ -11,7 +11,6 @@ const CoinsStack = () =>{
             screenOptions={{
                 headerStyle :{
                     backgroundColor: Colors.darkGray,
-                    textAlign:"center"
                 },
                 headerTintColor: Colors.softWhite
             }}

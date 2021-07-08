@@ -1,14 +1,14 @@
 import React from 'react';
-import {View, Text, StyleSheet, Image} from 'react-native';
+import {View, Pressable,Text, StyleSheet, Image} from 'react-native';
 import  Colors  from '../../resources/colors';
 
 import ArrowUp from '../../assets/arrow_up.png';
 import ArrowDown from '../../assets/arrow_down.png';
 
-const CoinsItem = ({ item }) => {
+const CoinsItem = ({ item, onPress }) => {
 
     return(
-        <View style={styles.container}>
+        <Pressable onPress={onPress} style={styles.container}>
             <View style={styles.row}>
                 <Text style={styles.symbolText}>{item.symbol}</Text>
                 <Text style={styles.nameText}>{item.name}</Text>
@@ -25,7 +25,7 @@ const CoinsItem = ({ item }) => {
             }
             
             </View>
-        </View>
+        </Pressable>
     );
 }
 
@@ -35,7 +35,7 @@ const styles = StyleSheet.create({
         justifyContent:"space-between",
         borderBottomColor: Colors.softWhite,
         borderBottomWidth: 1, 
-        paddingVertical: 16,
+        paddingVertical: 24,
         paddingHorizontal: 20,
     },
     row:{
@@ -44,11 +44,11 @@ const styles = StyleSheet.create({
     symbolText: {
         fontSize: 18,
         color: Colors.softWhite,
-        marginRight: 10,
+        marginRight: 20,
     },
     nameText: {
         fontSize: 16,
-        marginRight: 20,
+        marginRight: 25,
         color: Colors.softWhite,
     },
     priceText:{
@@ -57,7 +57,7 @@ const styles = StyleSheet.create({
     },
     percentText: {
         color: Colors.softWhite,
-        fontSize: 14
+        fontSize: 16
     },
     arrowStyle:{
         width: 22,
