@@ -42,12 +42,12 @@ class CoinsSearch extends Component {
 const styles = StyleSheet.create({
     textInput: {
         height: 46,
-        backgroundColor: "rgba(0,0,0,0.2)",
+        backgroundColor: "rgba(0,0,0,0.1)",
         paddingLeft: 16,
         color: Colors.softWhite,
     },
     textInputAndroid:{
-        borderWidth: 2,
+        borderWidth: 1,
         borderBottomColor: Colors.softBlue,
         margin: 8
     },

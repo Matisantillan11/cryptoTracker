@@ -10,7 +10,7 @@ const CoinsStack = () =>{
         <Stack.Navigator
             screenOptions={{
                 headerStyle :{
-                    backgroundColor: Colors.darkGray,
+                    backgroundColor: Colors.blackPearl,
                 },
                 headerTintColor: Colors.softWhite
             }}
