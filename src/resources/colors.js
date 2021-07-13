@@ -3,8 +3,8 @@ const colors = {
     softWhite: "#f1f1f1",
     softBlue: "#3866a3",
     blackPearl: "#20252c",
-    charade: "#272c35",
-    zircon: "#e0e0e0",
+    pirton: "#3c6fc8",
+    carmine: "#ef6372"
 }
 
 export default colors;

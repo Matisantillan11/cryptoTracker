@@ -1,14 +1,17 @@
 import React, {Component} from "react";
-import { View, Text, Image, SectionList, FlatList ,StyleSheet } from "react-native";
+import { View, Text, Image, SectionList, FlatList, Pressable ,StyleSheet } from "react-native";
 import Colors from '../../resources/colors';
 import Http from '../../librarys/Http';
+import Storage from '../../librarys/Storage';
 import CoinMarketItem from './CoinMarketItem.js'
+
 
 class CoinDetailScreen extends Component {
 
     state = {
         coin: {},
         markets: {},
+        isFavorite: false,
     }
 
     getSections = (coin) => {
@@ -43,12 +46,50 @@ class CoinDetailScreen extends Component {
     
     }
 
+    ToggleFavorite = () => {
+        if(this.state.isFavorite){
+            this.removeFavorite();
+        } else {
+            this.addFavorite();
+        }
+        
+    }
+
+    addFavorite = async () => {
+        const coin = JSON.stringify(this.state.coin);
+        const key= `favorite-${this.state.coin.id}`;
+        const stored = await Storage.instance.add(key, coin);
+        if(stored){
+            this.setState({isFavorite: true});
+        }
+    }
+
+    removeFavorite = async () => {
+        const key = `favorite-${this.state.coin.id}`;
+        await Storage.instance.remove(key);
+
+        this.setState({isFavorite: false }); 
+    }
+
+    getFavorite = async () => {
+        const key = `favorite-${this.state.coin.id}`
+        try{
+            const favStr = await Storage.instance.get(key);
+            if(favStr != null){
+                this.setState({isFavorite: true})
+            }
+        } catch(err){
+            console.error("[error]", err)
+        }
+    }
     componentDidMount() {
         const { coin }  = this.props.route.params;
 
         this.props.navigation.setOptions({title: coin.symbol });
         this.getMarket(coin.id)
-        this.setState({ coin });
+        this.setState({ coin }, () => {
+            this.getFavorite();
+        });
 
     }
 
@@ -56,12 +97,28 @@ class CoinDetailScreen extends Component {
 
     render(){
 
-        const { coin, markets } = this.state;
+        const { coin, markets, isFavorite } = this.state;
         return(
             <View style={styles.container}>
                 <View style={styles.subHeader}>
-                    <Image style={styles.iconImage} source={{uri:  this.getSymbolIcon(coin.name)}}></Image>
-                    <Text style={styles.coinName}>{ coin.name} </Text>
+                    <View style={styles.row}>
+                        <Image style={styles.iconImage} source={{uri:  this.getSymbolIcon(coin.name)}}></Image>
+                        <Text style={styles.coinName}>{ coin.name} </Text>
+                    </View>
+    
+                    <Pressable  
+                        onPress={this.ToggleFavorite}
+                            style={
+                            isFavorite ? 
+                            styles.btnFavoriteRemove :
+                            styles.btnFavoriteAdd}>
+                        <Text style={styles.favoriteText}>
+                            
+                            {isFavorite ?
+                            "Remove Favorites" :
+                            "Add Favorites"}
+                        </Text>
+                    </Pressable>
                 </View>
                 <SectionList 
                 style={styles.section}
@@ -96,9 +153,29 @@ const styles = StyleSheet.create({
     },
     subHeader:{
         backgroundColor: "rgba(0,0,0,0.2)",
+        padding: 16,
         flexDirection: "row",
         alignItems: "center",
-        padding: 16,
+        justifyContent: "space-between"
+    },
+    row:{
+        flexDirection: "row",
+        alignItems: "center",
+        
+    },
+    btnFavoriteAdd:{
+        padding: 8,
+        borderRadius: 8,
+        backgroundColor: Colors.pirton
+    },
+    btnFavoriteRemove:{
+        padding: 8,
+        borderRadius: 8,
+        backgroundColor: Colors.carmine
+    },
+    favoriteText:{
+        color: Colors.softWhite,
+        fontSize: 16,
     },
     iconImage: {
         width:50,

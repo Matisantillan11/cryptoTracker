@@ -4,7 +4,9 @@ import { NavigationContainer } from '@react-navigation/native';
 import CoinsStack from './src/components/coins/CoinsStack';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import Bank from './src/assets/bank.png';
+import Star from './src/assets/star.png';
 import Colors from './src/resources/colors';
+import FavoriteStack from './src/components/favorites/FavoriteStack'
 const Tabs = createBottomTabNavigator();
 const App = () => {
   return (
@@ -19,13 +21,26 @@ const App = () => {
           name="Coins"
           component={CoinsStack}
           options={{
-            tabBarIcon: ({ size, color }) =>(
+            tabBarIcon: ({ size }) =>(
               <Image 
-              style={{tintColor: color, width: size, height: size}}
+              style={{tintColor: Colors.softBlue, width: size, height: size}}
               source={Bank}
                />
             )
           }}/>
+
+          <Tabs.Screen
+          name="Favorites"
+          component={FavoriteStack}
+          options={{
+            tabBarIcon: ({ size }) =>(
+              <Image 
+              style={{tintColor: Colors.softBlue, width: size, height: size}}
+              source={Star}
+               />
+            )
+          }}/>
+          
       </Tabs.Navigator>
     </NavigationContainer>
   );
