@@ -1,5 +1,5 @@
 import React, {Component} from "react";
-import { View, Text, Image, SectionList, FlatList, Pressable ,StyleSheet } from "react-native";
+import { View, Text, Image, SectionList, FlatList, Pressable ,StyleSheet, Alert } from "react-native";
 import Colors from '../../resources/colors';
 import Http from '../../librarys/Http';
 import Storage from '../../librarys/Storage';
@@ -64,11 +64,25 @@ class CoinDetailScreen extends Component {
         }
     }
 
-    removeFavorite = async () => {
-        const key = `favorite-${this.state.coin.id}`;
-        await Storage.instance.remove(key);
+    removeFavorite =  () => {
+        Alert.alert("Remove Favorite", "Are you sure?", [
+            {
+                text: "Remove",
+                onPress: async () => {
+                    const key = `favorite-${this.state.coin.id}`;
+                    await Storage.instance.remove(key);
 
-        this.setState({isFavorite: false }); 
+                    this.setState({isFavorite: false }); 
+                },
+                style: "destructive"
+            }
+            ,{
+                text: "Cancel",
+                onPress: () => {},
+                style:"cancel"
+            }
+        ])
+        
     }
 
     getFavorite = async () => {
