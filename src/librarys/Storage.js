@@ -5,7 +5,7 @@ class Storage{
 
     add = async (key, value) => {
         try{
-
+            
             await AsyncStorage.setItem(key, value);
             return true;
 
@@ -18,7 +18,7 @@ class Storage{
 
     get = async ( key ) => {
         try{
-            return await AsyncStorage.getItem(key);
+            return await AsyncStorage.getItem(key.toString());
         } catch (err){
             console.error("[Storage error {gettin item}] ", err);
             throw Error(err)
@@ -27,7 +27,7 @@ class Storage{
 
     getAll=  async (keys) => {
         try{
-            return await AsyncStorage.getItem(keys);
+            return await AsyncStorage.multiGet(keys);
         }catch(err){
             console.error("[Storage error {getting all}] ", err);
             throw Error(err)
@@ -38,7 +38,7 @@ class Storage{
     getAllKeys = async () =>{
         try{
             const keys = await AsyncStorage.getAllKeys(); 
-            return keys
+            return keys;
         }catch(err){
             console.error("[Storage error {getting keys}] ", err);
             throw Error(err)
