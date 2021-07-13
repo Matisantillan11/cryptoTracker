@@ -25,6 +25,7 @@ const styles = StyleSheet.create({
     },
     nameText:{
         color: Colors.softWhite,
+        fontSize: 16,
         fontWeight: "bold"
     },
     priceText: {
